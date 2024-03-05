@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+    id("kotlinx-serialization")
 }
 
 android {
@@ -59,6 +62,25 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    // Hilt
+    implementation("com.google.dagger:hilt-android:2.51")
+    implementation("com.google.devtools.ksp:symbol-processing-api:1.9.22-1.0.17")
+    implementation(kotlin("stdlib-jdk8"))
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.cardview:cardview:1.0.0")
+    kapt("com.google.dagger:hilt-compiler:2.51")
+    // Ktor
+    implementation("io.ktor:ktor-client-android:2.3.8")
+    implementation("io.ktor:ktor-client-serialization:2.3.8")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.8")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+    implementation("io.ktor:ktor-client-content-negotiation:2.3.8")
+    implementation("io.ktor:ktor-client-logging-jvm:2.3.8")
+    // Compose Navigation
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+    // Realm DB
+    implementation("io.realm.kotlin:library-base:1.13.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -66,4 +88,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+}
+kapt {
+    correctErrorTypes = true
 }
