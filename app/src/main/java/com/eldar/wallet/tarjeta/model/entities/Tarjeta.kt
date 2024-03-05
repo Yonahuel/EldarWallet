@@ -1,12 +1,12 @@
 package com.eldar.wallet.tarjeta.model.entities
 
-import io.realm.kotlin.types.RealmObject
-import io.realm.kotlin.types.annotations.PrimaryKey
+import com.eldar.wallet.login.model.entities.Usuario
+import io.realm.kotlin.types.EmbeddedRealmObject
 
-class Tarjeta: RealmObject {
-    @PrimaryKey
-    val numero: Int? = null
-    val tipo: String? = null
-    val codigo: Int? = null
-    val vencimiento: Double? = null
+class Tarjeta: EmbeddedRealmObject {
+    var numero: String = ""
+    var tipo: String = ""
+    var codigo: Int = 0
+    var vencimiento: String = ""
+    var tarjeta: Usuario? = null
 }

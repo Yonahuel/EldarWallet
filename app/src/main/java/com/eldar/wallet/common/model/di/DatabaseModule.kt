@@ -1,5 +1,6 @@
 package com.eldar.wallet.common.model.di
 
+import com.eldar.wallet.login.model.entities.Usuario
 import com.eldar.wallet.tarjeta.model.entities.Tarjeta
 import dagger.Module
 import dagger.Provides
@@ -17,7 +18,8 @@ class DatabaseModule {
     fun provideDb(): Realm {
         val config= RealmConfiguration.Builder(
             schema = setOf(
-                Tarjeta::class
+                Tarjeta::class,
+                Usuario::class
             )
         )
             .name("app_database")
