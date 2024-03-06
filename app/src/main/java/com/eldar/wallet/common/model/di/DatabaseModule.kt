@@ -18,8 +18,8 @@ class DatabaseModule {
     fun provideDb(): Realm {
         val config= RealmConfiguration.Builder(
             schema = setOf(
-                Tarjeta::class,
-                Usuario::class
+                Usuario::class,
+                Tarjeta::class
             )
         )
             .name("app_database")

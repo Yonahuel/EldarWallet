@@ -9,7 +9,6 @@ import io.ktor.client.request.get
 import io.ktor.client.request.url
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.isSuccess
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.serialization.json.Json
 
@@ -19,7 +18,8 @@ class DataDownloader {
 
     suspend fun downloadQr(
         httpClient: HttpClient = ktorHttpClient,
-        nombre: String
+        nombre: String,
+        apellido: String
     ): MutableStateFlow<QrApi?> {
         val data = MutableStateFlow<QrApi?>(null)
         try {

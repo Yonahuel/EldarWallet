@@ -1,5 +1,6 @@
 package com.eldar.wallet.login.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,21 +16,30 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.eldar.wallet.common.ui.navigation.Screen
+import com.eldar.wallet.viewmodel.AppViewModel
 
 @Composable
 fun LoginScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: AppViewModel,
+    navController: NavController
 ) {
-    var email by remember { mutableStateOf("") }
+    val context = LocalContext.current
+    var nombreUsuario by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    val usuarios by viewModel.usuarios.collectAsState()
 
     Surface(
         modifier = modifier.fillMaxSize()
@@ -49,9 +59,9 @@ fun LoginScreen(
 
                 OutlinedTextField(
                     modifier = modifier.fillMaxWidth(),
-                    value = email,
-                    onValueChange = { email = it },
-                    label = { Text(text = "Correo electrónico") }
+                    value = nombreUsuario,
+                    onValueChange = { nombreUsuario = it },
+                    label = { Text(text = "Nombre de usuario") }
                 )
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -64,7 +74,14 @@ fun LoginScreen(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Button(onClick = { /* Iniciar sesión */ }) {
+                Button(onClick = { usuarios.forEach { usuario ->
+                    if (usuario.nombreUsuario == nombreUsuario && usuario.password == password) {
+                        viewModel.setUsuario(usuario)
+                        navController.navigate(Screen.Home.name)
+                    } else {
+                        Toast.makeText(context, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
+                    }
+                } }) {
                     Text(text = "Iniciar sesión")
                 }
             }
@@ -75,5 +92,5 @@ fun LoginScreen(
 @Preview
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen()
+    //LoginScreen()
 }

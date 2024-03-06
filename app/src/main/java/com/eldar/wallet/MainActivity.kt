@@ -1,11 +1,13 @@
 package com.eldar.wallet
 
 import android.os.Bundle
+import android.view.SurfaceControl
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
@@ -32,7 +34,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             EldarWalletTheme {
-                Scaffold(
+                Surface(
                     modifier = Modifier.fillMaxSize(),
                     content = { MainApp(viewModel = viewModel) }
                 )
@@ -42,15 +44,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainApp(viewModel: AppViewModel) {
+fun MainApp(
+    viewModel: AppViewModel
+) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Screen.Home.name) {
         composable(Screen.Home.name) {
-            HomeScreen()
+            HomeScreen(viewModel = viewModel, navController = navController)
         }
         composable(Screen.Login.name) {
-            LoginScreen()
+            LoginScreen(viewModel = viewModel, navController = navController)
         }
         composable(Screen.Nfc.name) {
             NfcScreen()

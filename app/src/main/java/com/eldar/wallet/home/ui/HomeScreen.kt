@@ -23,23 +23,31 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.eldar.wallet.common.ui.navigation.Screen
 import com.eldar.wallet.tarjeta.model.entities.Tarjeta
 import com.eldar.wallet.tarjeta.model.fake.tarjetaFake
 import com.eldar.wallet.tarjeta.model.fake.tarjetasFake
+import com.eldar.wallet.viewmodel.AppViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: AppViewModel,
+    navController: NavController
 ) {
-    val balance = remember { mutableStateOf(1000.0) }
-    val tarjetas = tarjetasFake
+    val usuario by viewModel.usuario.collectAsState()
+    val tarjetas = usuario?.tarjetas?.toList()
+    //val tarjetas = tarjetasFake
 
     Scaffold(
         topBar = {
@@ -49,30 +57,35 @@ fun HomeScreen(
             Column(modifier = Modifier.padding(16.dp)) {
                 // Saldo
                 Text(text = "Saldo:", style = MaterialTheme.typography.bodyLarge)
-                Text(text = "$${balance.value}", style = MaterialTheme.typography.bodyMedium)
+                Text(text = "$${usuario?.saldo}", style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // Tarjetas asociadas
-                Text(text = "Tarjetas asociadas:", style = MaterialTheme.typography.bodyLarge)
-                LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                    items(tarjetas) { tarjeta ->
-                        CardItem(tarjeta = tarjeta)
-                        Spacer(modifier = modifier.height(12.dp))
+                if (tarjetas != null) {
+                    Text(text = "Tarjetas asociadas:", style = MaterialTheme.typography.bodyLarge)
+                    LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                        items(tarjetas) { tarjeta ->
+                            CardItem(tarjeta = tarjeta)
+                            Spacer(modifier = modifier.height(12.dp))
+                        }
                     }
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
-                Spacer(modifier = Modifier.height(16.dp))
 
                 // Botones de acceso
                 Row {
                     Button(
-                        onClick = { /* Agregar una nueva tarjeta */ },
+                        onClick = { navController.navigate(Screen.Tarjeta.name) },
                         modifier = Modifier.weight(1f)
                     ) {
                         Text(text = "Agregar una nueva tarjeta")
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     Button(
-                        onClick = { /* Pago con QR */ },
+                        onClick = {
+                            viewModel.setQrUrl(nombre = usuario!!.nombre, apellido = usuario!!.apellido)
+                            navController.navigate(Screen.Qr.name)
+                                  },
                         modifier = Modifier.weight(1f)
                     ) {
                         Text(text = "Pago con QR")
@@ -114,7 +127,7 @@ fun CardItem(
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    //HomeScreen()
 }
 
 @Preview

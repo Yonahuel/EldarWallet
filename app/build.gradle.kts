@@ -53,7 +53,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -71,17 +70,22 @@ dependencies {
     kapt(libs.hilt.compiler)
     // Ktor
     implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.logging.jvm)
     implementation(libs.ktor.client.serialization)
+    implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.ktor.client.content.negotiation)
-    implementation(libs.ktor.client.logging.jvm)
     // Compose Navigation
     implementation(libs.androidx.navigation.compose)
     // Realm DB
     implementation(libs.library.base)
     // Coil
     implementation(libs.coil.compose)
+
+    // Mock
+    testImplementation(libs.mockk)
+    // Test Corrutinas
+    testImplementation(libs.kotlinx.coroutines.test)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
