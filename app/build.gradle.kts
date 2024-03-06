@@ -63,23 +63,25 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     // Hilt
-    implementation("com.google.dagger:hilt-android:2.51")
-    implementation("com.google.devtools.ksp:symbol-processing-api:1.9.22-1.0.17")
+    implementation(libs.dagger.hilt.android)
+    implementation(libs.symbol.processing.api)
     implementation(kotlin("stdlib-jdk8"))
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.cardview:cardview:1.0.0")
-    kapt("com.google.dagger:hilt-compiler:2.51")
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.cardview)
+    kapt(libs.hilt.compiler)
     // Ktor
-    implementation("io.ktor:ktor-client-android:2.3.8")
-    implementation("io.ktor:ktor-client-serialization:2.3.8")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.8")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
-    implementation("io.ktor:ktor-client-content-negotiation:2.3.8")
-    implementation("io.ktor:ktor-client-logging-jvm:2.3.8")
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.serialization)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.client.logging.jvm)
     // Compose Navigation
-    implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation(libs.androidx.navigation.compose)
     // Realm DB
-    implementation("io.realm.kotlin:library-base:1.13.0")
+    implementation(libs.library.base)
+    // Coil
+    implementation(libs.coil.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
