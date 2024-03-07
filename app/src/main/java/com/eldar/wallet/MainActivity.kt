@@ -63,7 +63,7 @@ fun MainApp(
             QrScreen()
         }
         composable(Screen.Tarjeta.name) {
-            TarjetaScreen()
+            TarjetaScreen(viewModel = viewModel, navController = navController)
         }
     }
 }

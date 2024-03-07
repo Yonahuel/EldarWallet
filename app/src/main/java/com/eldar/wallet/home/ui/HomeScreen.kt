@@ -56,8 +56,14 @@ fun HomeScreen(
         content = {
             Column(modifier = Modifier.padding(16.dp)) {
                 // Saldo
-                Text(text = "Saldo:", style = MaterialTheme.typography.bodyLarge)
-                Text(text = "$${usuario?.saldo}", style = MaterialTheme.typography.bodyMedium)
+                Text(
+                    text = "Saldo:",
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Text(
+                    text = "$${usuario?.saldo}",
+                    style = MaterialTheme.typography.bodyMedium
+                )
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // Tarjetas asociadas
@@ -85,14 +91,16 @@ fun HomeScreen(
                         onClick = {
                             viewModel.setQrUrl(nombre = usuario!!.nombre, apellido = usuario!!.apellido)
                             navController.navigate(Screen.Qr.name)
-                                  },
+                        },
                         modifier = Modifier.weight(1f)
                     ) {
                         Text(text = "Pago con QR")
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     Button(
-                        onClick = { /* Generar un pago */ },
+                        onClick = {
+                            navController.navigate(Screen.Nfc.name)
+                        },
                         modifier = Modifier.weight(1f)
                     ) {
                         Text(text = "Generar un pago")
@@ -109,16 +117,21 @@ fun CardItem(
     modifier: Modifier = Modifier,
     tarjeta: Tarjeta
 ) {
+    val mostrarNumero by remember { mutableStateOf(false) }
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
-        Column(
-
-        ) {
+        Column {
+            val numero = tarjeta.numero.split(" ")
             Icon(imageVector = Icons.Filled.ExitToApp, contentDescription = null) // TODO: Cambiar ícono
-            Text(text = "**** **** **** ${tarjeta.numero}")
-            Text(text = tarjeta.tipo ?: "")
+            if (mostrarNumero) {
+                Text(text = tarjeta.numero)
+            } else {
+                Text(text = "**** **** **** ${numero[3]}")
+            }
+            Text(text = tarjeta.tipo)
             Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null)
         }
     }
