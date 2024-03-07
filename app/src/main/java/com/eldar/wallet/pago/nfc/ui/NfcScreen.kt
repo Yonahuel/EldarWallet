@@ -29,7 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.eldar.wallet.home.ui.CardItem
+import com.eldar.wallet.home.ui.TarjetaItem
 import com.eldar.wallet.viewmodel.AppViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -71,7 +71,7 @@ fun NfcScreen(
                 Spacer(modifier = modifier.height(8.dp))
 
                 tarjetas?.forEach { tarjeta ->
-                    CardItem(tarjeta = tarjeta)
+                    TarjetaItem(tarjeta = tarjeta)
                 }
                 Spacer(modifier = modifier.height(16.dp))
 
