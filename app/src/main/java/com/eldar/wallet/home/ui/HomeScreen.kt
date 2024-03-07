@@ -77,7 +77,7 @@ fun HomeScreen(
                 // Tarjetas asociadas
                 if (tarjetas != null) {
                     Text(text = "Tarjetas asociadas:", style = MaterialTheme.typography.bodyLarge)
-                    LazyRow(modifier = Modifier.fillMaxWidth()) {
+                    LazyRow(modifier = modifier.fillMaxWidth()) {
                         items(tarjetas) { tarjeta ->
                             CardItem(
                                 tarjeta = tarjeta,
@@ -155,7 +155,7 @@ fun CardItem(
 
                 Row {
                     Text(
-                        text = if (mostrarNumero) tarjeta.numero else "**** **** **** ${numero[3]}",
+                        text = if (mostrarNumero) tarjeta.numero else "**** **** **** ${numero.last()}",
                         color = Color.White,
                         modifier = modifier.padding(top = 4.dp)
                     )

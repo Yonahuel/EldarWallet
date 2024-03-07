@@ -49,7 +49,7 @@ fun MainApp(
 ) {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Screen.Home.name) {
+    NavHost(navController = navController, startDestination = Screen.Login.name) {
         composable(Screen.Home.name) {
             HomeScreen(viewModel = viewModel, navController = navController)
         }

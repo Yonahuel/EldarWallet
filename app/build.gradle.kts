@@ -4,6 +4,7 @@ plugins {
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
     id("kotlinx-serialization")
+    id("io.realm.kotlin")
 }
 
 android {
@@ -49,6 +50,7 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
             excludes += "/META-INF/LICENSE.md"
+            pickFirsts.add("META-INF/LICENSE-notice.md")
         }
     }
 }
