@@ -1,10 +1,10 @@
 package com.eldar.wallet.viewmodel
 
 import android.app.Application
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.eldar.wallet.login.model.entities.Usuario
+import com.eldar.wallet.login.model.fake.usuariosFake
 import com.eldar.wallet.login.repositories.UsuarioRepository
 import com.eldar.wallet.pago.qr.network.QrApi
 import com.eldar.wallet.pago.qr.repositories.QrRepository
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AppViewModel @Inject constructor(
-    private val application: Application,
+    application: Application,
     private val usuarioRepository: UsuarioRepository,
     private val qrRepository: QrRepository
 ): AndroidViewModel(application) {
@@ -34,6 +34,9 @@ class AppViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            usuariosFake.forEach {usuario ->
+                usuarioRepository.insert(usuario)
+            }
             usuarioRepository.getUsuarios().collect {
                 _usuarios.value = it
             }
@@ -52,18 +55,16 @@ class AppViewModel @Inject constructor(
         }
     }
 
+    // No se usa
     fun getUsuario(id: ObjectId) {
         viewModelScope.launch {
             usuarioRepository.getUsuario(id).collect {
-                if (it != null) {
-                    _usuario.value = it
-                } else {
-                    Toast.makeText(application, "Usuario o contraseña inválidos", Toast.LENGTH_LONG)
-                }
+                _usuario.value = it
             }
         }
     }
 
+    // Método para ser usado en una pantalla de registro de usuarios
     fun insertUsuario(usuario: Usuario) {
         viewModelScope.launch {
             usuarioRepository.insert(usuario)

@@ -78,9 +78,8 @@ fun LoginScreen(
                     if (usuario.nombreUsuario == nombreUsuario && usuario.password == password) {
                         viewModel.setUsuario(usuario)
                         navController.navigate(Screen.Home.name)
-                    } else {
-                        Toast.makeText(context, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
                     }
+                    Toast.makeText(context, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
                 } }) {
                     Text(text = "Iniciar sesión")
                 }

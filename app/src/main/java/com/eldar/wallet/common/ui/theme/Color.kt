@@ -10,4 +10,7 @@ val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
-val DoradoMaster = Color(0xFFD700)
+val DoradoMaster = Color(0xFF99824D)
+val RojoVisa = Color(0xFFC40033)
+val AzulAmerican = Color( 0xFF0055A4)
+val BarraSuperior = Color(0xFF0000FF)

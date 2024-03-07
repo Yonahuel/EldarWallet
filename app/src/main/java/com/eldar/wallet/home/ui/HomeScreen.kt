@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CreditCard
@@ -38,6 +38,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.eldar.wallet.common.ui.navigation.Screen
+import com.eldar.wallet.common.ui.theme.AzulAmerican
+import com.eldar.wallet.common.ui.theme.DoradoMaster
+import com.eldar.wallet.common.ui.theme.RojoVisa
 import com.eldar.wallet.tarjeta.model.entities.Tarjeta
 import com.eldar.wallet.tarjeta.model.fake.tarjetaFake
 import com.eldar.wallet.viewmodel.AppViewModel
@@ -74,7 +77,7 @@ fun HomeScreen(
                 // Tarjetas asociadas
                 if (tarjetas != null) {
                     Text(text = "Tarjetas asociadas:", style = MaterialTheme.typography.bodyLarge)
-                    LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                    LazyRow(modifier = Modifier.fillMaxWidth()) {
                         items(tarjetas) { tarjeta ->
                             CardItem(
                                 tarjeta = tarjeta,
@@ -130,11 +133,11 @@ fun CardItem(
         modifier = modifier.wrapContentWidth(),
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(containerColor = when(tarjeta.tipo) {
-            "Mastercard" -> Color.Red
-            "Visa" -> Color.Red
-            "American Express" -> DoradoMaster
-        }
-        )
+            "Mastercard" -> DoradoMaster
+            "Visa" -> RojoVisa
+            "American Express" -> AzulAmerican
+            else -> Color.White
+        })
     ) {
         Row(
             modifier = modifier.padding(8.dp)
@@ -142,6 +145,7 @@ fun CardItem(
             Icon(
                 imageVector = Icons.Filled.CreditCard,
                 contentDescription = null,
+                tint = Color.White,
                 modifier = modifier.padding(start = 16.dp, top = 16.dp)
             )
             Column(
@@ -152,11 +156,13 @@ fun CardItem(
                 Row {
                     Text(
                         text = if (mostrarNumero) tarjeta.numero else "**** **** **** ${numero[3]}",
+                        color = Color.White,
                         modifier = modifier.padding(top = 4.dp)
                     )
                     Icon(
                         imageVector = if (mostrarNumero) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
                         contentDescription = null,
+                        tint = Color.White,
                         modifier = modifier
                             .clickable { mostrarNumero = !mostrarNumero }
                             .padding(start = 16.dp)
@@ -164,7 +170,10 @@ fun CardItem(
                     )
                 }
                 Spacer(modifier = modifier.height(8.dp))
-                Text(text = tarjeta.tipo)
+                Text(
+                    text = tarjeta.tipo,
+                    color = Color.White
+                )
             }
         }
     }
