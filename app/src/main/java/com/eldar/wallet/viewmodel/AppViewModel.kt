@@ -8,6 +8,7 @@ import com.eldar.wallet.login.model.entities.Usuario
 import com.eldar.wallet.login.repositories.UsuarioRepository
 import com.eldar.wallet.pago.qr.network.QrApi
 import com.eldar.wallet.pago.qr.repositories.QrRepository
+import com.eldar.wallet.tarjeta.model.entities.Tarjeta
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -66,6 +67,16 @@ class AppViewModel @Inject constructor(
     fun insertUsuario(usuario: Usuario) {
         viewModelScope.launch {
             usuarioRepository.insert(usuario)
+        }
+    }
+
+    fun insertTarjeta(tarjeta: Tarjeta) {
+        if (usuario.value != null) {
+            usuario.value!!.tarjetas.add(tarjeta)
+
+            viewModelScope.launch {
+                usuarioRepository.insert(usuario.value!!)
+            }
         }
     }
 }

@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.material.icons.extended)
     // Hilt
     implementation(libs.dagger.hilt.android)
     implementation(libs.symbol.processing.api)
@@ -83,6 +84,7 @@ dependencies {
     implementation(libs.coil.compose)
 
     // Mock
+    implementation(libs.mockk)
     testImplementation(libs.mockk)
     // Test Corrutinas
     testImplementation(libs.kotlinx.coroutines.test)

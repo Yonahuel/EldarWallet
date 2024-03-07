@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.eldar.wallet.tarjeta.model.entities.Tarjeta
 import com.eldar.wallet.viewmodel.AppViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,8 +40,8 @@ fun TarjetaScreen(
     navController: NavController
 ) {
     val context = LocalContext.current
-    var numeroTarjeta by remember { mutableStateOf("") }
-    var vencimiento by remember { mutableStateOf("") }
+    var numeroNuevo by remember { mutableStateOf("") }
+    var vencimientoNuevo by remember { mutableStateOf("") }
     var cvv by remember { mutableStateOf("") }
     val usuario by viewModel.usuario.collectAsState()
 
@@ -61,15 +62,15 @@ fun TarjetaScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 OutlinedTextField(
-                    value = numeroTarjeta,
-                    onValueChange = { numeroTarjeta = it },
+                    value = numeroNuevo,
+                    onValueChange = { numeroNuevo = it },
                     label = { Text(text = "Número de tarjeta") }
                 )
                 Spacer(modifier = Modifier.height(8.dp))
 
                 OutlinedTextField(
-                    value = vencimiento,
-                    onValueChange = { vencimiento = it },
+                    value = vencimientoNuevo,
+                    onValueChange = { vencimientoNuevo = it },
                     label = { Text(text = "Fecha de vencimiento") }
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -82,9 +83,21 @@ fun TarjetaScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Button(onClick = {
-                    if (cvv != "" && numeroTarjeta != "" && vencimiento != "") {
+                    if (cvv != "" && numeroNuevo != "" && vencimientoNuevo != "") {
+                        val tarjeta = Tarjeta().apply {
+                            numero = numeroNuevo
+                            codigo = cvv.toInt()
+                            vencimiento = vencimientoNuevo
+                            tarjeta = usuario
+                            tipo = when(numeroNuevo[0]) {
+                                '3' -> "American Express"
+                                '4' -> "Visa"
+                                '5' -> "Mastercard"
+                                else -> {""}
+                            }
+                        }
+                        usuario?.let { viewModel.insertTarjeta(tarjeta) }
                         Toast.makeText(context, "Tarjeta guardada", Toast.LENGTH_SHORT).show()
-                        usuario?.let { viewModel.insertUsuario(it) } // TODO: Insertar tarjeta
                     } else {
                         Toast.makeText(context, "Falta completar datos", Toast.LENGTH_SHORT).show()
                     }
@@ -94,7 +107,6 @@ fun TarjetaScreen(
             }
         }
     )
-
 }
 
 @Composable

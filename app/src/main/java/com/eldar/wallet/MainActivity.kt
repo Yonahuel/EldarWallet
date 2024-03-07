@@ -57,10 +57,10 @@ fun MainApp(
             LoginScreen(viewModel = viewModel, navController = navController)
         }
         composable(Screen.Nfc.name) {
-            NfcScreen()
+            NfcScreen(viewModel = viewModel, navController = navController)
         }
         composable(Screen.Qr.name) {
-            QrScreen()
+            QrScreen(viewModel = viewModel, navController = navController)
         }
         composable(Screen.Tarjeta.name) {
             TarjetaScreen(viewModel = viewModel, navController = navController)
