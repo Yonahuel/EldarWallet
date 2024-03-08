@@ -1,36 +1,28 @@
 package com.eldar.wallet.pago.qr.ui
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import coil.compose.SubcomposeAsyncImage
-import com.eldar.wallet.common.ui.theme.BarraSuperior
+import com.eldar.wallet.common.ui.BarraSuperior
 import com.eldar.wallet.viewmodel.AppViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun QrScreen(
@@ -39,47 +31,37 @@ fun QrScreen(
     navController: NavController
 ) {
     val usuario by viewModel.usuario.collectAsState()
-    val qr by viewModel.qrUrl.collectAsState()
+    val qr by viewModel.qr.collectAsState()
 
     Scaffold(
         topBar = {
-                 TopAppBar(
-                     title = { Text(
-                         text = "Pago con QR",
-                         color = Color.White
-                     ) },
-                     colors = TopAppBarDefaults.topAppBarColors(containerColor = BarraSuperior),
-                     navigationIcon = {
-                         IconButton(onClick = { navController.navigateUp() }) {
-                             Icon(
-                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                 contentDescription = "Botón atrás",
-                                 tint = Color.White
-                             )
-                         }
-                     }
-                 )
+            BarraSuperior(titulo = "Pago con Qr", mostrarBotonAtras = true, navController = navController)
         },
         content = {
-            Column(modifier = Modifier.padding(16.dp)) {
-                SubcomposeAsyncImage(
-                    modifier = modifier
-                        .align(Alignment.CenterHorizontally)
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    model = qr?.response,
-                    contentDescription = "QR",
-                    loading = {
-                        CircularProgressIndicator(
-                            modifier = modifier
-                                .fillMaxSize()
-                                .padding(16.dp)
+            Column(
+                modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 120.dp)
+            ) {
+                if (qr != null) {
+                    Card(
+                        modifier = modifier.fillMaxWidth(),
+                        elevation = CardDefaults.cardElevation(8.dp)
+                    ) {
+                        Image(
+                            bitmap = qr!!,
+                            contentDescription = "QR",
+                            modifier = modifier.fillMaxSize()
                         )
                     }
-                )
+                }
                 Spacer(modifier = Modifier.height(16.dp))
-                Text(text = "Nombre y apellido: ", style = MaterialTheme.typography.bodyLarge)
-                Text(text = "${usuario?.nombre} ${usuario?.apellido}")
+
+                Text(
+                    text = "Nombre y apellido: ",
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Text(
+                    text = "${usuario?.nombre} ${usuario?.apellido}"
+                )
             }
         }
     )

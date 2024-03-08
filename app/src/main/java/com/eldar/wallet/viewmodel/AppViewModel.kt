@@ -1,13 +1,12 @@
 package com.eldar.wallet.viewmodel
 
 import android.app.Application
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.eldar.wallet.common.network.DataDownloader
 import com.eldar.wallet.login.model.entities.Usuario
 import com.eldar.wallet.login.model.fake.usuariosFake
 import com.eldar.wallet.login.repositories.UsuarioRepository
-import com.eldar.wallet.pago.qr.network.QrApi
 import com.eldar.wallet.pago.qr.repositories.QrRepository
 import com.eldar.wallet.tarjeta.model.entities.Tarjeta
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,14 +29,14 @@ class AppViewModel @Inject constructor(
     private val _usuarios = MutableStateFlow<List<Usuario>>(emptyList())
     val usuarios = _usuarios.asStateFlow()
     // Url de la imagen del qr
-    private val _qrUrl = MutableStateFlow<QrApi?>(null)
-    val qrUrl = _qrUrl.asStateFlow()
+    private val _qr = MutableStateFlow<ImageBitmap?>(null)
+    val qr = _qr.asStateFlow()
 
     init {
         viewModelScope.launch {
             usuariosFake.forEach {usuario ->
                 usuarioRepository.insert(usuario)
-                DataDownloader().downloadQr(nombre = "Nahuel", apellido = "Cueto")
+                //qrRepository.getQr(nombre = "Nahuel", apellido = "Cueto")
             }
             usuarioRepository.getUsuarios().collect {
                 _usuarios.value = it
@@ -46,13 +45,13 @@ class AppViewModel @Inject constructor(
     }
 
     fun setUsuario(usuario: Usuario) { _usuario.value = usuario }
-    fun setQrUrl(
+    fun setQr(
         nombre: String,
         apellido: String
     ) {
         viewModelScope.launch {
-            qrRepository.getUrl(nombre = nombre, apellido = apellido).collect {
-                _qrUrl.value = it
+            qrRepository.getQr(nombre = nombre, apellido = apellido).collect {
+                _qr.value = it
             }
         }
     }

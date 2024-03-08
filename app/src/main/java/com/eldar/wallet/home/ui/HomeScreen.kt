@@ -23,13 +23,10 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -43,9 +40,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.eldar.wallet.common.ui.BarraSuperior
 import com.eldar.wallet.common.ui.navigation.Screen
 import com.eldar.wallet.common.ui.theme.AzulAmerican
-import com.eldar.wallet.common.ui.theme.BarraSuperior
 import com.eldar.wallet.common.ui.theme.DoradoMaster
 import com.eldar.wallet.common.ui.theme.RojoVisa
 import com.eldar.wallet.login.model.entities.Usuario
@@ -55,7 +52,6 @@ import com.eldar.wallet.viewmodel.AppViewModel
 import io.mockk.mockk
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
@@ -67,13 +63,7 @@ fun HomeScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(
-                    text = "EldarWallet",
-                    color = Color.White
-                ) },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = BarraSuperior)
-            )
+            BarraSuperior(titulo = "EldarWallet", mostrarBotonAtras = false, navController = null)
         },
         content = {
             Column(
@@ -88,37 +78,26 @@ fun HomeScreen(
                 Row(
                     modifier = modifier.padding(horizontal = 8.dp, vertical = 16.dp)
                 ) {
-                    ElevatedButton(
+                    Boton(
                         onClick = { navController.navigate(Screen.Tarjeta.name) },
-                        modifier = Modifier.weight(1f),
-                        shape = RoundedCornerShape(8.dp),
-                        elevation = ButtonDefaults.elevatedButtonElevation(8.dp)
-                    ) {
-                        Text(text = "Agregar tarjeta")
-                    }
+                        texto = "Agregar tarjeta",
+                        modifier = modifier.weight(1f)
+                    )
                     Spacer(modifier = Modifier.width(8.dp))
-                    ElevatedButton(
+                    Boton(
                         onClick = {
-                            viewModel.setQrUrl(nombre = usuario!!.nombre, apellido = usuario!!.apellido)
+                            viewModel.setQr(nombre = usuario!!.nombre, apellido = usuario!!.apellido)
                             navController.navigate(Screen.Qr.name)
                         },
-                        modifier = Modifier.weight(1f),
-                        shape = RoundedCornerShape(8.dp),
-                        elevation = ButtonDefaults.elevatedButtonElevation(8.dp)
-                    ) {
-                        Text(text = "Pago con QR")
-                    }
+                        texto = "Pago con QR",
+                        modifier = modifier.weight(1f)
+                    )
                     Spacer(modifier = Modifier.width(8.dp))
-                    ElevatedButton(
-                        onClick = {
-                            navController.navigate(Screen.Nfc.name)
-                        },
-                        modifier = Modifier.weight(1f),
-                        shape = RoundedCornerShape(8.dp),
-                        elevation = ButtonDefaults.elevatedButtonElevation(8.dp)
-                    ) {
-                        Text(text = "Generar un pago")
-                    }
+                    Boton(
+                        onClick = { navController.navigate(Screen.Nfc.name) },
+                        texto = "Generar un pago",
+                        modifier = modifier.weight(1f)
+                    )
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 // Tarjetas asociadas
@@ -141,6 +120,22 @@ fun HomeScreen(
             }
         }
     )
+}
+
+@Composable
+fun Boton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    texto: String
+) {
+    ElevatedButton(
+        onClick = onClick,
+        modifier = modifier,
+        shape = RoundedCornerShape(8.dp),
+        elevation = ButtonDefaults.elevatedButtonElevation(8.dp)
+    ) {
+        Text(text = texto)
+    }
 }
 
 @Composable

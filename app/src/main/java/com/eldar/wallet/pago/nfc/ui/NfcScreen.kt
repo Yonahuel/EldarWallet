@@ -3,7 +3,6 @@ package com.eldar.wallet.pago.nfc.ui
 import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
@@ -39,8 +38,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.graphics.Color
-import com.eldar.wallet.common.ui.theme.BarraSuperior
-import com.eldar.wallet.tarjeta.model.entities.Tarjeta
+import com.eldar.wallet.common.ui.BarraSuperior
+import com.eldar.wallet.common.ui.theme.FondoBarraSuperior
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -58,22 +57,7 @@ fun NfcScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(
-                    text = "Pago con NFC",
-                    color = Color.White
-                ) },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = BarraSuperior),
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Botón atrás",
-                            tint = Color.White
-                        )
-                    }
-                }
-            )
+            BarraSuperior(titulo = "Pago con NFC", mostrarBotonAtras = true, navController = navController)
          },
         content = {
             Column(
