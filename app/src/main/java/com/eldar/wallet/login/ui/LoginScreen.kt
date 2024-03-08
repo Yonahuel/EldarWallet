@@ -13,6 +13,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -47,18 +49,24 @@ fun LoginScreen(
         Card(
             modifier = modifier
                 .fillMaxSize()
-                .padding(horizontal = 20.dp, vertical = 40.dp),
+                .padding(horizontal = 20.dp, vertical = 60.dp),
             shape = RoundedCornerShape(12.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 12.dp)
         ) {
             Column(
                 modifier = Modifier.padding(16.dp)
             ) {
-                Text(text = "Iniciar sesión", style = MaterialTheme.typography.bodyLarge)
+                Text(
+                    text = "Iniciar sesión",
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = modifier.align(Alignment.CenterHorizontally)
+                )
                 Spacer(modifier = Modifier.height(16.dp))
 
                 OutlinedTextField(
-                    modifier = modifier.fillMaxWidth(),
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally),
                     value = nombreUsuario,
                     onValueChange = { nombreUsuario = it },
                     label = { Text(text = "Nombre de usuario") }
@@ -66,7 +74,9 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 OutlinedTextField(
-                    modifier = modifier.fillMaxWidth(),
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally),
                     value = password,
                     onValueChange = { password = it },
                     label = { Text(text = "Contraseña") },
