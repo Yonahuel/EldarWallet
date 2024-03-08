@@ -78,7 +78,7 @@ fun HomeScreen(
         content = {
             Column(
                 modifier = Modifier
-                    .padding(start = 16.dp, end = 16.dp, top = 100.dp)
+                    .padding(start = 16.dp, end = 16.dp, top = 120.dp)
                     .verticalScroll(rememberScrollState())
             ) {
                 // Saldo

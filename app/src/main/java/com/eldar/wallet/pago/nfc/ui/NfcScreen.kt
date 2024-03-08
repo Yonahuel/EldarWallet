@@ -3,9 +3,12 @@ package com.eldar.wallet.pago.nfc.ui
 import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -31,6 +34,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.eldar.wallet.home.ui.TarjetaItem
 import com.eldar.wallet.viewmodel.AppViewModel
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.ui.graphics.Color
+import com.eldar.wallet.common.ui.theme.BarraSuperior
+import com.eldar.wallet.tarjeta.model.entities.Tarjeta
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -49,12 +59,17 @@ fun NfcScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Pago con NFC") },
+                title = { Text(
+                    text = "Pago con NFC",
+                    color = Color.White
+                ) },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = BarraSuperior),
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Botón atrás"
+                            contentDescription = "Botón atrás",
+                            tint = Color.White
                         )
                     }
                 }
@@ -62,37 +77,56 @@ fun NfcScreen(
          },
         content = {
             Column(
-                modifier = modifier.padding(16.dp)
+                modifier = modifier
+                    .padding(start = 16.dp, end = 16.dp, top = 120.dp)
+                    .fillMaxHeight()
+                    .verticalScroll(rememberScrollState())
             ) {
-                Text(text = "Generar un pago", style = MaterialTheme.typography.bodyLarge)
-                Spacer(modifier = modifier.height(16.dp))
+                if (tarjetas!!.isNotEmpty()) {
+                    Text(
+                        text = "Tarjetas asociadas",
+                        style = MaterialTheme.typography.titleLarge,
+                        modifier = modifier.padding(vertical = 8.dp)
+                    )
+                    Spacer(modifier = modifier.height(8.dp))
 
-                Text(text = "Tarjetas asociadas", style = MaterialTheme.typography.bodyMedium)
-                Spacer(modifier = modifier.height(8.dp))
+                    LazyRow {
+                        items(tarjetas) { tarjeta ->
+                            TarjetaItem(
+                                tarjeta = tarjeta,
+                                modifier = modifier.padding(end = 8.dp)
+                            )
+                        }
+                    }
+                    Spacer(modifier = modifier.height(24.dp))
 
-                tarjetas?.forEach { tarjeta ->
-                    TarjetaItem(tarjeta = tarjeta)
-                }
-                Spacer(modifier = modifier.height(16.dp))
+                    OutlinedTextField(
+                        value = monto.toString(),
+                        onValueChange = { monto = it.toDouble() },
+                        label = { Text(text = "Monto") }
+                    )
+                    Spacer(modifier = modifier.height(8.dp))
 
-                OutlinedTextField(
-                    value = monto.toString(),
-                    onValueChange = { monto = it.toDouble() },
-                    label = { Text(text = "Monto") }
-                )
-                Spacer(modifier = modifier.height(8.dp))
+                    OutlinedTextField(
+                        value = nota,
+                        onValueChange = { nota = it },
+                        label = { Text(text = "Nota (opcional)") }
+                    )
+                    Spacer(modifier = modifier.height(16.dp))
 
-                OutlinedTextField(
-                    value = nota,
-                    onValueChange = { nota = it },
-                    label = { Text(text = "Nota (opcional)") }
-                )
-                Spacer(modifier = modifier.height(16.dp))
-
-                Button(
-                    onClick = { Toast.makeText(context, "Pago realizado", Toast.LENGTH_SHORT).show() }
-                ) {
-                    Text(text = "Realizar pago")
+                    Button(
+                        onClick = {
+                            Toast.makeText(context, "Pago realizado", Toast.LENGTH_SHORT).show()
+                        }
+                    ) {
+                        Text(text = "Realizar pago")
+                    }
+                } else {
+                    Text(
+                        text = "No hay tarjetas asociadas",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = Color.Black
+                    )
                 }
             }
         }

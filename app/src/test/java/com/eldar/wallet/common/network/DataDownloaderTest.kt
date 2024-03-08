@@ -28,9 +28,9 @@ class DataDownloaderTest {
 
     @Test
     fun test_downloadQr() = runTest {
-        coEvery { dataDownloader.downloadQr(nombre = "") } returns MutableStateFlow(testQr)
+        coEvery { dataDownloader.downloadQr(nombre = "", apellido = "") } returns MutableStateFlow(testQr)
 
-        dataDownloader.downloadQr(nombre = "").collect() { qr ->
+        dataDownloader.downloadQr(nombre = "", apellido = "").collect() { qr ->
             assertEquals("Test Response", qr?.response)
         }
     }

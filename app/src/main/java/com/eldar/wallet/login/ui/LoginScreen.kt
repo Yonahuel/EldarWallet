@@ -74,14 +74,16 @@ fun LoginScreen(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Button(onClick = { usuarios.forEach { usuario ->
-                    if (usuario.nombreUsuario == nombreUsuario && usuario.password == password) {
+                Button(onClick = {
+                    val usuario = usuarios.find { it.nombreUsuario == nombreUsuario && it.password == password }
+
+                    if (usuario != null) {
                         viewModel.setUsuario(usuario)
                         navController.navigate(Screen.Home.name)
                     } else {
                         Toast.makeText(context, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
                     }
-                } }) {
+                }) {
                     Text(text = "Iniciar sesión")
                 }
             }

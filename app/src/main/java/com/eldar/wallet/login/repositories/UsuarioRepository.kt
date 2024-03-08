@@ -1,6 +1,7 @@
 package com.eldar.wallet.login.repositories
 
 import com.eldar.wallet.login.model.entities.Usuario
+import com.eldar.wallet.tarjeta.model.entities.Tarjeta
 import io.realm.kotlin.Realm
 import io.realm.kotlin.UpdatePolicy
 import io.realm.kotlin.ext.query
@@ -44,6 +45,13 @@ class UsuarioRepository(
     suspend fun insert(usuario: Usuario) {
         db.write {
             copyToRealm(usuario, UpdatePolicy.ALL)
+        }
+    }
+
+    suspend fun insertTarjeta(usuario: Usuario, tarjeta: Tarjeta) {
+        db.write {
+            usuario.tarjetas.add(tarjeta)
+            //copyToRealm(usuario, UpdatePolicy.ALL)
         }
     }
 }

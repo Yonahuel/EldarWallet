@@ -73,10 +73,8 @@ class AppViewModel @Inject constructor(
 
     fun insertTarjeta(tarjeta: Tarjeta) {
         if (usuario.value != null) {
-            usuario.value!!.tarjetas.add(tarjeta)
-
             viewModelScope.launch {
-                usuarioRepository.insert(usuario.value!!)
+                usuarioRepository.insertTarjeta(usuario = usuario.value!!, tarjeta = tarjeta)
             }
         }
     }
