@@ -4,6 +4,7 @@ plugins {
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
     id("kotlinx-serialization")
+    id("io.realm.kotlin")
 }
 
 android {
@@ -48,6 +49,8 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/LICENSE.md"
+            pickFirsts.add("META-INF/LICENSE-notice.md")
         }
     }
 }
@@ -61,6 +64,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.material.icons.extended)
     // Hilt
     implementation(libs.dagger.hilt.android)
     implementation(libs.symbol.processing.api)
@@ -83,6 +87,7 @@ dependencies {
     implementation(libs.coil.compose)
 
     // Mock
+    implementation(libs.mockk)
     testImplementation(libs.mockk)
     // Test Corrutinas
     testImplementation(libs.kotlinx.coroutines.test)
