@@ -38,6 +38,8 @@ val ktorHttpClient = HttpClient(Android) {
         }
     }
     install(DefaultRequest) {
-        header(HttpHeaders.ContentType, ContentType.Application.Json)
+        header(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded)
+        header("X-RapidAPI-Key", "90b91580bbmshbaf1bedab7a12ddp12bca4jsn7db01761a52c")
+        header("X-RapidAPI-Host", "neutrinoapi-qr-code.p.rapidapi.com")
     }
 }

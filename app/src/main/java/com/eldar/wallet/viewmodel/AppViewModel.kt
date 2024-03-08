@@ -3,6 +3,7 @@ package com.eldar.wallet.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.eldar.wallet.common.network.DataDownloader
 import com.eldar.wallet.login.model.entities.Usuario
 import com.eldar.wallet.login.model.fake.usuariosFake
 import com.eldar.wallet.login.repositories.UsuarioRepository
@@ -36,6 +37,7 @@ class AppViewModel @Inject constructor(
         viewModelScope.launch {
             usuariosFake.forEach {usuario ->
                 usuarioRepository.insert(usuario)
+                DataDownloader().downloadQr(nombre = "Nahuel", apellido = "Cueto")
             }
             usuarioRepository.getUsuarios().collect {
                 _usuarios.value = it
