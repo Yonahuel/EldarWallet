@@ -9,6 +9,7 @@ import com.eldar.wallet.login.model.fake.usuariosFake
 import com.eldar.wallet.login.repositories.UsuarioRepository
 import com.eldar.wallet.pago.qr.repositories.QrRepository
 import com.eldar.wallet.tarjeta.model.entities.Tarjeta
+import com.eldar.wallet.tarjeta.repositories.TarjetaRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +21,8 @@ import javax.inject.Inject
 class AppViewModel @Inject constructor(
     application: Application,
     private val usuarioRepository: UsuarioRepository,
-    private val qrRepository: QrRepository
+    private val qrRepository: QrRepository,
+    private val tarjetaRepository: TarjetaRepository
 ): AndroidViewModel(application) {
     // Usuario seleccionado
     private val _usuario = MutableStateFlow<Usuario?>(null)
@@ -72,10 +74,21 @@ class AppViewModel @Inject constructor(
         }
     }
 
-    fun insertTarjeta(tarjeta: Tarjeta) {
+    fun insertTarjeta(
+        numero: String,
+        codigo: Int,
+        vencimiento: String,
+        tipo: String
+    ) {
         if (usuario.value != null) {
             viewModelScope.launch {
-                usuarioRepository.insertTarjeta(usuario = usuario.value!!, tarjeta = tarjeta)
+                tarjetaRepository.insertTarjeta(
+                    usuario = usuario.value!!,
+                    numeroTarjeta = numero,
+                    codigoTarjeta = codigo,
+                    vencimientoTarjeta = vencimiento,
+                    tipoTarjeta = tipo
+                )
             }
         }
     }

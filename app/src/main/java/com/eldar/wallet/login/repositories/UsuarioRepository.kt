@@ -22,7 +22,7 @@ class UsuarioRepository(
         val usuario = flow {
             emit(
                 db
-                    .query<Usuario>("id == $id")
+                    .query<Usuario>("id == $0", id)
                     .first()
                     .find()
             )
@@ -45,13 +45,6 @@ class UsuarioRepository(
     suspend fun insert(usuario: Usuario) {
         db.write {
             copyToRealm(usuario, UpdatePolicy.ALL)
-        }
-    }
-
-    suspend fun insertTarjeta(usuario: Usuario, tarjeta: Tarjeta) {
-        db.write {
-            usuario.tarjetas.add(tarjeta)
-            //copyToRealm(usuario, UpdatePolicy.ALL)
         }
     }
 }

@@ -1,6 +1,6 @@
-package com.eldar.wallet.login.model.di
+package com.eldar.wallet.tarjeta.model.di
 
-import com.eldar.wallet.login.repositories.UsuarioRepository
+import com.eldar.wallet.tarjeta.repositories.TarjetaRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,8 +10,8 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class RepositoryModule {
+class TarjetaRepositoryModule {
     @Provides
     @Singleton
-    fun provideUsuarioRepository(db: Realm): UsuarioRepository { return UsuarioRepository(db) }
+    fun provideTarjetaRepository(db: Realm): TarjetaRepository { return TarjetaRepository(db)}
 }

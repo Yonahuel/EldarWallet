@@ -67,19 +67,19 @@ fun TarjetaScreen(
 
                 Button(onClick = {
                     if (cvv != "" && numeroNuevo != "" && vencimientoNuevo != "") {
-                        val tarjeta = Tarjeta().apply {
-                            numero = numeroNuevo
-                            codigo = cvv.toInt()
-                            vencimiento = vencimientoNuevo
-                            tarjeta = usuario
+                        usuario?.let { viewModel.insertTarjeta(
+                            numero = numeroNuevo,
+                            codigo = cvv.toInt(),
+                            vencimiento = vencimientoNuevo,
                             tipo = when(numeroNuevo[0]) {
                                 '3' -> "American Express"
                                 '4' -> "Visa"
                                 '5' -> "Mastercard"
-                                else -> {""}
+                                else -> {
+                                    ""
+                                }
                             }
-                        }
-                        usuario?.let { viewModel.insertTarjeta(tarjeta) }
+                        ) }
                         Toast.makeText(context, "Tarjeta guardada", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(context, "Falta completar datos", Toast.LENGTH_SHORT).show()
