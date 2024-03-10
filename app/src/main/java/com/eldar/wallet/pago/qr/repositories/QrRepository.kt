@@ -8,7 +8,7 @@ import com.eldar.wallet.common.network.DataDownloader
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class QrRepository(private val downloader: DataDownloader) {
-    val tag = "QrRepository"
+    private val tag = "QrRepository"
 
     suspend fun getQr(
         nombre: String,

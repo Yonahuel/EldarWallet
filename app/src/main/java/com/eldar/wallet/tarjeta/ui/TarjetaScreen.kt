@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.eldar.wallet.common.ui.BarraSuperior
-import com.eldar.wallet.tarjeta.model.entities.Tarjeta
+import com.eldar.wallet.common.ui.navigation.Screen
 import com.eldar.wallet.viewmodel.AppViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -80,6 +80,7 @@ fun TarjetaScreen(
                                 }
                             }
                         ) }
+                        navController.navigate(Screen.Home.name)
                         Toast.makeText(context, "Tarjeta guardada", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(context, "Falta completar datos", Toast.LENGTH_SHORT).show()
