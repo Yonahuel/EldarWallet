@@ -36,4 +36,5 @@ EldarWallet es una billetera virtual que permite realizar múltiples operaciones
 3. En gradle.properties agrega una variable llamada MAPBOX_TOKEN con un api key válido para https://rapidapi.com/neutrinoapi/api/qr-code/.
 4. Ejecuta la aplicación en un emulador o dispositivo físico.
 5. La aplicación tiene precargados usuarios con el proposito de imitar la consulta a una api de usuarios registrados.
+   Los usuarios de muestra están alojados en login.fake.UsuariosFake.kt. Se pueden utilizar los datos de estos usuarios en la pantalla de login, por ejemplo: nombreUsuario = "user1" password = "1234"
    
