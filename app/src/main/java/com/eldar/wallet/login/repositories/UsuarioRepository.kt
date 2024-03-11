@@ -33,8 +33,7 @@ class UsuarioRepository(
     fun getUsuarios(): Flow<List<Usuario>> {
         val usuarios = flow {
             emit(
-                db
-                    .query<Usuario>()
+                db.query<Usuario>()
                     .find()
                     .toList()
             )

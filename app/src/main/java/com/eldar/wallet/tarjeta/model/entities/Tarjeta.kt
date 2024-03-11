@@ -8,5 +8,5 @@ class Tarjeta: EmbeddedRealmObject {
     var tipo: String = ""
     var codigo: Int = 0
     var vencimiento: String = ""
-    var tarjeta: Usuario? = null
+    var usuario: Usuario? = null
 }

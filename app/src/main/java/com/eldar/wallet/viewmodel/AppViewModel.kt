@@ -82,7 +82,7 @@ class AppViewModel @Inject constructor(
     ) {
         if (usuario.value != null) {
             viewModelScope.launch {
-                tarjetaRepository.insertTarjeta2(
+                tarjetaRepository.insertTarjeta(
                     usuario = usuario.value!!,
                     numeroTarjeta = numero,
                     codigoTarjeta = codigo,
