@@ -22,6 +22,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        buildConfigField("String", "RAPID_API_KEY", "\"${project.findProperty("RAPID_API_KEY") ?: ""}\"")
     }
 
     buildTypes {
@@ -31,6 +32,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            android.buildFeatures.buildConfig = true
         }
     }
     compileOptions {
@@ -83,8 +85,8 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     // Realm DB
     implementation(libs.library.base)
-    // Coil
-    implementation(libs.coil.compose)
+    // Keystore
+    implementation(libs.androidx.security.crypto.ktx)
 
     // Mock
     implementation(libs.mockk)

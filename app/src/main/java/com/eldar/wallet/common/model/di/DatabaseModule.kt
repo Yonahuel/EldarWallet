@@ -1,5 +1,6 @@
 package com.eldar.wallet.common.model.di
 
+import com.eldar.wallet.common.model.DatabaseEncryption
 import com.eldar.wallet.login.model.entities.Usuario
 import com.eldar.wallet.tarjeta.model.entities.Tarjeta
 import dagger.Module
@@ -16,7 +17,7 @@ class DatabaseModule {
     @Singleton
     @Provides
     fun provideDb(): Realm {
-        val config= RealmConfiguration.Builder(
+        val config = RealmConfiguration.Builder(
             schema = setOf(
                 Usuario::class,
                 Tarjeta::class
@@ -24,6 +25,7 @@ class DatabaseModule {
         )
             .name("app_database")
             .schemaVersion(1)
+            //.encryptionKey(DatabaseEncryption().getKey("qr_key")!!)
             .build()
 
         return Realm.open(config)

@@ -12,24 +12,18 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import org.mongodb.kbson.ObjectId
 
+/**
+ * Repositorio para acceder y manipular datos de usuarios.
+ * @param db Instancia de Realm utilizada para almacenar los datos.
+ */
 class UsuarioRepository(
     private val db: Realm
 ) {
-    fun getUsuario(
-        id: ObjectId
-    ): Flow<Usuario?> {
-
-        val usuario = flow {
-            emit(
-                db
-                    .query<Usuario>("id == $0", id)
-                    .first()
-                    .find()
-            )
-        }
-        return usuario
-    }
-
+    /**
+     * Obtiene una lista de usuarios como un flujo de datos.
+     *
+     * @return [Flow] que emite una lista de objetos [Usuario].
+     */
     fun getUsuarios(): Flow<List<Usuario>> {
         val usuarios = flow {
             emit(
@@ -41,6 +35,11 @@ class UsuarioRepository(
         return usuarios
     }
 
+    /**
+     * Inserta un nuevo usuario en la base de datos.
+     *
+     * @param usuario Objeto [Usuario] a insertar.
+     */
     suspend fun insert(usuario: Usuario) {
         db.write {
             copyToRealm(usuario, UpdatePolicy.ALL)

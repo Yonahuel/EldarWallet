@@ -13,8 +13,20 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 class DataDownloader {
     private val tag = "DataDownloader"
-    private val baseUrl = "https://neutrinoapi-qr-code.p.rapidapi.com"
+    val baseUrl = "https://neutrinoapi-qr-code.p.rapidapi.com"
 
+    /**
+     * Descarga un código QR personalizado utilizando los parámetros especificados.
+     *
+     * @param httpClient Cliente HTTP utilizado para realizar la solicitud (opcional, predeterminado: ktorHttpClient).
+     * @param nombre Nombre del usuario para el código QR.
+     * @param apellido Apellido del usuario para el código QR.
+     * @param colorFondo Color de fondo del código QR en formato hexadecimal (por ejemplo, "ffffff" para blanco).
+     * @param colorFrente Color del frente del código QR en formato hexadecimal (por ejemplo, "000000" para negro).
+     * @param altura Altura del código QR en píxeles (opcional, predeterminado: 750).
+     * @param ancho Ancho del código QR en píxeles (opcional, predeterminado: 750).
+     * @return [MutableStateFlow] que emite un arreglo de bytes (imagen del código QR) o null si no se pudo obtener.
+     */
     @OptIn(InternalAPI::class)
     suspend fun downloadQr(
         httpClient: HttpClient = ktorHttpClient,

@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.eldar.wallet.common.model.DatabaseEncryption
 import com.eldar.wallet.common.ui.navigation.Screen
 import com.eldar.wallet.common.ui.theme.EldarWalletTheme
 import com.eldar.wallet.home.ui.HomeScreen
@@ -24,10 +25,14 @@ import com.eldar.wallet.tarjeta.ui.TarjetaScreen
 import com.eldar.wallet.viewmodel.AppViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Punto de entrada de la aplicación Android. Anotado con @AndroidEntryPoint para habilitar la inyección de dependencias con Hilt.
+ */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //DatabaseEncryption().saveKey("qr_key")
 
         val viewModel = ViewModelProvider(this)[AppViewModel::class.java]
 
@@ -43,6 +48,11 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/**
+ * Composable principal de la aplicación.
+ *
+ * @param viewModel ViewModel compartido para la lógica de la aplicación.
+ */
 @Composable
 fun MainApp(
     viewModel: AppViewModel

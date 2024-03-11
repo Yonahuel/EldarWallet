@@ -167,6 +167,12 @@ fun TarjetaScreen(
     )
 }
 
+/**
+ * Identifica el tipo de tarjeta a partir del número proporcionado.
+ *
+ * @param cardNumber Número de la tarjeta (sin espacios).
+ * @return Tipo de tarjeta (AMERICAN_EXPRESS, VISA, MASTERCARD o DESCONOCIDO).
+ */
 fun identificarTarjeta(cardNumber: String): TipoTarjeta {
     val ameRegex = Regex("^3[47][0-9]{0,}\$")
     val visaRegex = Regex("^4[0-9]{0,}\$")
@@ -182,6 +188,12 @@ fun identificarTarjeta(cardNumber: String): TipoTarjeta {
     }
 }
 
+/**
+ * Formatea el número de una tarjeta American Express (AMEX).
+ *
+ * @param text AnnotatedString con el número de tarjeta.
+ * @return TransformedText con el número formateado.
+ */
 fun formatAmex(text: AnnotatedString): TransformedText {
     val trimmed = if (text.text.length >= 15) text.text.substring(0..14) else text.text
     var out = ""
@@ -209,6 +221,12 @@ fun formatAmex(text: AnnotatedString): TransformedText {
     return TransformedText(AnnotatedString(out), creditCardOffsetTranslator)
 }
 
+/**
+ * Formatea el número de otras tarjetas (Visa, Mastercard, etc.).
+ *
+ * @param text AnnotatedString con el número de tarjeta.
+ * @return TransformedText con el número formateado.
+ */
 fun formatOtrasTarjetas(text: AnnotatedString): TransformedText {
 
     val trimmed = if (text.text.length >= 16) text.text.substring(0..15) else text.text

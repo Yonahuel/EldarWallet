@@ -1,47 +1,66 @@
 package com.eldar.wallet.common.network
 
-import com.eldar.wallet.pago.qr.network.QrApi
-import io.mockk.MockKAnnotations
+import io.ktor.client.HttpClient
+import io.ktor.client.request.post
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.utils.EmptyContent.status
+import io.ktor.http.HttpStatusCode
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
-import io.mockk.unmockkAll
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.test.runTest
-import org.junit.After
-import org.junit.Before
-import org.junit.Test
+import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.json.JsonNull.content
 import org.junit.Assert.assertEquals
+import org.junit.Test
 
 class DataDownloaderTest {
-    /*
-    private val dataDownloader = mockk<DataDownloader>()
-    private val testQr = ByteArray()
+    /*@Test
+    fun `downloadQr should return image data when HTTP response is successful`() {
+        // Arrange
+        val httpClient = mockk<HttpClient>()
+        val dataDownloader = DataDownloader(httpClient)
+        val nombre = "John"
+        val apellido = "Doe"
+        val colorFondo = "ffffff"
+        val colorFrente = "000000"
+        val altura = "750"
+        val ancho = "750"
+        val expectedImageData = "dummy image data".toByteArray()
 
-    @Before
-    fun setUp() {
-        MockKAnnotations.init(this, relaxed = true)
-    }
+        runBlocking {
+            coEvery { httpClient.post<HttpResponse>(any()) } returns
+                    mockk {
+                        every { status } returns HttpStatusCode.OK
+                        every { content.toByteArray() } returns expectedImageData
+                    }
+        }
 
-    @After
-    fun tearDown() {
-        unmockkAll()
+        val result = dataDownloader.downloadQr(nombre, apellido, colorFondo, colorFrente, altura, ancho)
+
+        assertEquals(expectedImageData, result.value)
     }
 
     @Test
-    fun test_downloadQr() = runTest {
-        coEvery { dataDownloader.downloadQr(
-            nombre = "",
-            apellido = "",
-            colorFondo = "",
-            colorFrente = "",
-            altura = 0,
-            ancho = 0
-        ) } returns MutableStateFlow(testQr)
+    fun `downloadQr should return null when HTTP response is not successful`() {
+        val httpClient = mockk<HttpClient>()
+        val dataDownloader = DataDownloader(httpClient)
+        val nombre = "John"
+        val apellido = "Doe"
+        val colorFondo = "ffffff"
+        val colorFrente = "000000"
+        val altura = 750
+        val ancho = 750
 
-        dataDownloader.downloadQr(nombre = "", apellido = "").collect() { qr ->
-            assertEquals("Test Response", qr?.response)
+        runBlocking {
+            coEvery { httpClient.post<HttpResponse>(any()) } returns
+                    mockk {
+                        every { status } returns HttpStatusCode.BadRequest
+                    }
         }
-    }
 
+        val result = dataDownloader.downloadQr(nombre, apellido, colorFondo, colorFrente, altura, ancho)
+
+        assertEquals(null, result.value)
+    }
      */
 }
