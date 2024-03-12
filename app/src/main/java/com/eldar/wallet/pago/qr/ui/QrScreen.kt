@@ -24,7 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.eldar.wallet.common.ui.BarraSuperior
-import com.eldar.wallet.viewmodel.AppViewModel
+import com.eldar.wallet.common.viewmodel.AppViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable

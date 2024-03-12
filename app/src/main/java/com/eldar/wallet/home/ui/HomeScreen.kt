@@ -48,7 +48,7 @@ import com.eldar.wallet.common.ui.theme.RojoVisa
 import com.eldar.wallet.login.model.entities.Usuario
 import com.eldar.wallet.tarjeta.model.entities.Tarjeta
 import com.eldar.wallet.tarjeta.model.fake.tarjetaFake
-import com.eldar.wallet.viewmodel.AppViewModel
+import com.eldar.wallet.common.viewmodel.AppViewModel
 import io.mockk.mockk
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

@@ -13,7 +13,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,7 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.eldar.wallet.common.ui.navigation.Screen
-import com.eldar.wallet.viewmodel.AppViewModel
+import com.eldar.wallet.common.viewmodel.AppViewModel
 
 @Composable
 fun LoginScreen(

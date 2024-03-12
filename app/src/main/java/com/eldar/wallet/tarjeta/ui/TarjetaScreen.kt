@@ -40,7 +40,7 @@ import androidx.navigation.NavController
 import com.eldar.wallet.common.ui.BarraSuperior
 import com.eldar.wallet.common.ui.navigation.Screen
 import com.eldar.wallet.tarjeta.model.entities.TipoTarjeta
-import com.eldar.wallet.viewmodel.AppViewModel
+import com.eldar.wallet.common.viewmodel.AppViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
